@@ -647,7 +647,7 @@ impl DB {
             false
         };
 
-        println!("paynie add: in open_cf_internal with ttl: {}, path: {}", with_ttl, cpath.as_ptr());
+        println!("paynie add: in open_cf_internal with ttl: {}, path: {}", with_ttl, path);
 
         let db = {
             let db_options = opts.inner;
