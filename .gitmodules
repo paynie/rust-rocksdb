@@ -6,4 +6,4 @@
 [submodule "titan"]
 	path = librocksdb_sys/libtitan_sys/titan
 	url = https://github.com/paynie/titan.git
-	branch = easygraph3-titan-v6.1.0
+	branch = easygraph3-titan-7.1
