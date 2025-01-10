@@ -597,9 +597,7 @@ impl DB {
         const ERR_CONVERT_PATH: &str = "Failed to convert path to CString when opening rocksdb";
         const ERR_NULL_DB_ONINIT: &str = "Could not initialize database";
         const ERR_NULL_CF_HANDLE: &str = "Received null column family handle from DB";
-
-        println!("paynie add: in open_cf_internal");
-
+        
         let cpath = CString::new(path.as_bytes()).map_err(|_| ERR_CONVERT_PATH.to_owned())?;
         fs::create_dir_all(Path::new(path)).map_err(|e| {
             format!(
@@ -647,8 +645,6 @@ impl DB {
             false
         };
 
-        println!("paynie add: in open_cf_internal with ttl: {}, path: {}", with_ttl, path);
-
         let db = {
             let db_options = opts.inner;
             let db_path = cpath.as_ptr();
@@ -672,7 +668,6 @@ impl DB {
 
             if !with_ttl {
                 if let Some(flag) = error_if_log_file_exist {
-                    println!("paynie add: in open_cf_internal before crocksdb_open_for_read_only_column_families");
                     unsafe {
                         ffi_try!(crocksdb_open_for_read_only_column_families(
                             db_options,
@@ -685,7 +680,6 @@ impl DB {
                         ))
                     }
                 } else if titan_options.is_null() {
-                    println!("paynie add: in open_cf_internal before crocksdb_open_column_families");
                     unsafe {
                         ffi_try!(crocksdb_open_column_families(
                             db_options,
@@ -697,7 +691,6 @@ impl DB {
                         ))
                     }
                 } else {
-                    println!("paynie add: in open_cf_internal before ctitandb_open_column_families");
                     unsafe {
                         ffi_try!(ctitandb_open_column_families(
                             db_path,
@@ -710,7 +703,6 @@ impl DB {
                     }
                 }
             } else {
-                println!("paynie add: in open_cf_internal before crocksdb_open_column_families_with_ttl");
                 let ttl_array = ttls_vec.as_ptr() as *const c_int;
 
                 unsafe {
